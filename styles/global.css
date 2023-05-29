@@ -1,0 +1,30 @@
+.links {
+    padding-right: 30px;
+}
+
+.navbar {
+    background-color: aquamarine;
+    padding: 15px;
+}
+
+.formulario {
+    width: 50%;
+}
+
+.inmueble {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+.badge{
+    position: absolute;
+    right:-20px;
+    top:10px;
+    background:red;
+    text-align: center;
+    border-radius: 30px 30px 30px 30px;
+    color:white;
+    padding:5px 10px;
+    font-size:20px;
+}
