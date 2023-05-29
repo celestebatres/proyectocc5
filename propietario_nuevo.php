@@ -3,6 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include './include/authentication.php';
 include("./include/inicia_conexion.php");
+include("./include/printconsole.php");
 ?>
 
 <!DOCTYPE html>
