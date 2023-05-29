@@ -42,7 +42,7 @@
     if ($usuario_valido != 0){
         $_SESSION['usuario_valido'] = "1";
         $_SESSION['email_usuario'] = $_POST['email'];
-        header('Location: menu.php');
+        header('Location: inmuebles.php');
         echo "usuario valido";
     }else{
         session_destroy();
