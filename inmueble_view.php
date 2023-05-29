@@ -41,7 +41,7 @@ $id_i = $_POST['id'];
             </ul>
         </div>
     </nav>
-    <div class="card inmueble mt-5" style="width: 50rem;">
+    <div class="card inmueble my-5" style="width: 50rem;">
         <span class="badge bg-success">Venta</span>
         <img src="https://blog.wasi.co/wp-content/uploads/2019/07/claves-fotografia-inmobiliaria-exterior-casa-software-inmobiliario-wasi.jpg"
             class="card-img-top" alt="inmueble">
@@ -50,7 +50,7 @@ $id_i = $_POST['id'];
             <?php
 
             $sql = "
-            select i.nombre as inmueble_nombre, p.nombre as propietario_nombre, i.habitaciones as habitaciones, cat.nombre as categoria, z.nombre as zona, i.descripcion, d.nombre as departamento, c.nombre as ciudad ,i.descripcion as descripcion from inmueble i
+            select i.nombre as inmueble_nombre, p.nombre as propietario_nombre, i.habitaciones as habitaciones, cat.nombre as categoria, z.nombre as zona, i.dimension as dimension, d.nombre as departamento, c.nombre as ciudad ,i.descripcion as descripcion from inmueble i
             inner join propietario p on i.propietario = p.propietario
             inner join categoria cat on i.categoria = cat.categoria
             inner join zona z on i.zona = z.zona
@@ -61,27 +61,50 @@ $id_i = $_POST['id'];
             $stmt = mysqli_prepare($conexion, $sql);
             mysqli_stmt_bind_param($stmt, "i", $_POST['id']);
             mysqli_stmt_execute($stmt);
-            mysqli_stmt_bind_result($stmt, $inmueble_nombre, $propietario_nombre, $habitaciones, $categoria_nombre, $zona, $descripcion, $departamento, $ciudad, $descripcion);
+            mysqli_stmt_bind_result($stmt, $inmueble_nombre, $propietario_nombre, $habitaciones, $categoria_nombre, $zona, $dimension, $departamento, $ciudad, $descripcion);
+            $tipo = 'Casa';
             while (mysqli_stmt_fetch($stmt)) {
                 echo '
             <h1>' . $inmueble_nombre . '</h1>
             <p class="fs-5">' . $propietario_nombre . '</p>
-            <p class="fs-4">Tipo de Negocio: Venta </p>
+            <p class="fs-4"></p>
             <p class="fs-4">Precio: ' . '$5000' . '</p>
-            <div class="container text-center">
+            <br><br>
+            <hr>
+            <div class="container">
+                <h2 class="text-center">Detalles del Inmueble</h2>
+                <br>
                 <div class="row">
                     <div class="col">
-                    Column
+                        <p><b>Departamento: </b>'.$departamento.'</p>
                     </div>
                     <div class="col">
-                    Column
+                        <p><b>Tipo de Inmueble: </b>'.$tipo.'</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p><b>Ciudad: </b>'.$ciudad.'</p>
                     </div>
                     <div class="col">
-                    Column
+                        <p><b>Area Construida: </b>'.$dimension.'</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p><b>Zona: </b>'.$zona.'</p>
+                    </div>
+                    <div class="col">
+                        <p><b>Habitaciones: </b>'.$habitaciones.'</p>
                     </div>
                 </div>
             </div>
-            
+            <br>
+            <hr>
+            <div class="detalles">
+                <h2 class="text-center">Descripción Adicional</h2>
+                <p>'.$descripcion.'</p>
+            </div>
             ';
             }
             mysqli_stmt_close($stmt);

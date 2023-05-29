@@ -5,28 +5,45 @@ ini_set('display_errors', 1);
 include './include/authentication.php';
 include './include/inicia_conexion.php';
 
-$id = null;
-$inmueble_nombre = $_POST['inmueble_nombre'];
-$propietario = $_POST['propietario'];
-$categoria = $_POST['categoria'];
-$departamento = $_POST['departamento'];
-$ciudad = $_POST['ciudad'];
-$zona = $_POST['zona']; //String -- Hacer comparaciones con string
-$habitaciones = $_POST['habitaciones'];
-$descripcion = $_POST['descripcion'];
+$id = $_POST['id'];
+$inmueble_nombre = trim($_POST['inmueble_nombre']);
+$propietario = trim($_POST['propietario']);
+$categoria = trim($_POST['categoria']);
+$departamento = trim($_POST['departamento']);
+$ciudad = trim($_POST['ciudad']);
+$zona = trim($_POST['zona']); 
+$dimension = trim($_POST['dimension']); 
+$habitaciones = trim($_POST['habitaciones']);
+$descripcion = trim($_POST['descripcion']);
+
+$tipo = trim($_POST['tipo']);
+$precio = trim($_POST['precio']);
+
+$estado = 1;
+$fecha_modificacion = 'hoy';
+
+if(isset($_POST['register_propietary'])) {
+  if(strlen($inmueble_nombre) >= 1 && strlen($propietario) && strlen($categoria) >=1 && strlen($categoria) >=1 && strlen($departamento) >=1 && strlen($ciudad) >=1 && strlen($zona) >=1 && strlen($habitaciones) >=1 && strlen($descripcion) >=1  ) {
+      
+      $consult = "INSERT INTO inmueble(propietario, categoria, zona, nombre, dimension, habitaciones, descripcion) VALUES ('$propietario', '$categoria', '$zona', '$inmueble_nombre', '$dimension', '$habitaciones', '$descripcion')";
+      $result = mysqli_query($conexion, $consult);
+
+      $consult_i_tipo = "INSERT INTO inmueble_tipo(inmueble, tipo, precio) values ('$id', '$tipo', '$precio');";
+      $result_i_tipo = mysqli_query($conexion, $consult_i_tipo);
+
+      $consult_i_estado = "INSERT INTO inmueble_estado(inmueble, estado, fecha_modificacion) values ('$id', '$estado', '$fecha_modificacion');";
+      $result_i_estado = mysqli_query($conexion, $consult_i_estado);
+
+      if($result && $result_i_tipo && $result_i_estado){
+          ?>
+          <h1> Propietario ingresado exitosamente</h1>
+          <?php
+      }else{
+          ?> 
+          <h1> Hijole </h1>
+          <?php
+      }
+  }
+}
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <?php
-  echo ($inmueble_nombre . $propietario . $categoria . $departamento . $ciudad . $zona . $habitaciones . $descripcion)
-  ?>
-</body>
-</html>
